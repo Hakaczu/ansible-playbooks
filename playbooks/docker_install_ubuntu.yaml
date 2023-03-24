@@ -1,4 +1,4 @@
-- name: install docker engine
+- name: install docker engine ubuntu
   hosts: docker
   become: true
   become_user: root
