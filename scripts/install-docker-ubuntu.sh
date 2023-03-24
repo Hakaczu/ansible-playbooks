@@ -1,6 +1,10 @@
 #!/bin/bash
-#remove old Docker verisions
-apt-get remove docker docker-engine docker.io containerd runc
+#check docker exist
+if command -v docker &> /dev/null
+then
+        echo "Docker exist"
+        exit
+fi
 #set up docker repository
 apt-get update
 apt-get -y install \
