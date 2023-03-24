@@ -1,0 +1,7 @@
+- name: install docker engine
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+    - name: install docker engine
+      script: ./scripts/install-docker-ubuntu.sh
