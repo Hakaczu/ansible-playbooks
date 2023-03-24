@@ -1,8 +1,41 @@
 - name: install docker engine
-  hosts: all
+  hosts: doscker
   become: true
   become_user: root
   tasks:
-    - name: install docker engine
+    - name: install dependencies
       when: ansible_os_family == 'Debian'
-      script: ./scripts/install-docker-ubuntu.sh >> docker-install.log
+      apt:
+        name: "{{item}}"
+        state: present
+        update_cache: yes
+      loop:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg-agent
+        - software-properties-common
+    - name: add GPG key
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: add docker repository to apt
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu
+        state: present
+    - name: install docker
+      apt:
+        name: "{{item}}"
+        state: latest
+        update_cache: yes
+      loop:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+        - docker-buildx-plugin
+        - docker-compose-plugin
+    - name: checking docker is installed
+      service:
+        name: docker
+        state: started
+        enabled: yes
