@@ -5,4 +5,4 @@
   tasks:
     - name: install docker engine
       when: ansible_os_family == 'Debian'
-      script: ./scripts/install-docker-ubuntu.sh
+      script: ./scripts/install-docker-ubuntu.sh >> docker-install.log
