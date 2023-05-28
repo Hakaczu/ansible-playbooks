@@ -1,0 +1,12 @@
+- name: install glances ubuntu
+  hosts: all
+  become: true
+  become_user: root
+  tasks:
+    - name: install glances ubuntu
+      when: ansible_distribution_release == 'jammy'
+      apt:
+        name: glances
+        state: present
+        update_cache: yes
+   
