@@ -1,0 +1,11 @@
+- name: get or update portainer scripts
+  hosts: docker
+  become: true
+  become_user: root
+  tasks:
+    - name: portainer scripts get/update
+      git:
+        repo: https://github.com/Hakaczu/portainer-scripts.git
+        dest: /root/
+        clone: yes
+        update: yes
