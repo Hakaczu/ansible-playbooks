@@ -3,6 +3,7 @@
   become: true
   become_user: root
   tasks:
+
     - name: install dependencies
       when: ansible_distribution_release == 'jammy'
       apt:
@@ -15,15 +16,18 @@
         - curl
         - gnupg-agent
         - software-properties-common
+
     - name: add GPG key
       when: ansible_distribution_release == 'jammy'
       apt_key:
         url: https://download.docker.com/linux/ubuntu/gpg
         state: present
+
     - name: add docker repository to apt
       apt_repository:
         repo: deb https://download.docker.com/linux/ubuntu jammy stable
         state: present
+
     - name: install docker
       when: ansible_distribution_release == 'jammy'
       apt:
@@ -36,6 +40,7 @@
         - containerd.io
         - docker-buildx-plugin
         - docker-compose-plugin
+
     - name: checking docker is installed
       when: ansible_distribution_release == 'jammy'
       service:

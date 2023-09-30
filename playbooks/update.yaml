@@ -3,28 +3,29 @@
   become: true
   become_user: root
   tasks:
+
     - name: update apt repo and cache
       when: ansible_os_family == 'Debian'
-      apt: 
-        update_cache=yes 
+      apt:
+        update_cache=yes
         force_apt_get=yes
       tags: update
 
     - name: update apk repo and upgrade
       when: ansible_os_family == 'Alpine'
-      apk: 
+      apk:
         update_cache=yes
       tags: update
 
     - name: upgrade apt packages
       when: ansible_os_family == 'Debian'
-      apt: 
-        upgrade=yes 
+      apt:
+        upgrade=yes
         force_apt_get=yes
       tags: upgrade
-    
+
     - name: upgrade apk packages
       when: ansible_os_family == 'Alpine'
-      apk: 
+      apk:
         upgrade=yes
       tags: upgrade

@@ -1,6 +1,7 @@
 - name: disk free
   hosts: all
   tasks:
+
     - name: Disk usage from command module
       command: df -h /
       register: space
