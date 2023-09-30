@@ -1,1 +1,2 @@
 .DS_Store
+/playbooks/configs/grafana-agent.yaml
