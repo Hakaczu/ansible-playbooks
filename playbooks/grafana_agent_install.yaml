@@ -1,0 +1,36 @@
+- name: install grafana agent
+  hosts: docker
+  become: true
+  become_user: root
+  tasks:
+    - name: add GPG key
+      when: ansible_distribution_release == 'jammy'
+      apt_key:
+        url: https://apt.grafana.com/gpg.key
+        state: present
+    - name: add grafana repository to apt
+      apt_repository:
+        repo: deb https://apt.grafana.com stable main
+        state: present
+    - name: install grafana agent
+      when: ansible_distribution_release == 'jammy'
+      apt:
+        name: grafana-agent
+        state: latest
+        update_cache: yes
+    - name: copy config
+      when: ansible_distribution_release == 'jammy'
+      copy:
+        src: ./configs/grafana-agent.yaml
+        dest: /etc/grafana-agent.yaml
+        owner: root
+        group: grafana-agent
+        mode: 0644
+    - name: restart grafana-agent
+      ansible.builtin.service:
+        name: grafana-agent
+        state: restarted
+    - name: enable grafana-agent
+      ansible.builtin.service:
+        name: grafana-agent
+        enabled: yes
