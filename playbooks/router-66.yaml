@@ -33,7 +33,7 @@
       ansible.builtin.docker_container:
         name: postgres
         image: postgres
-        envs:
+        env:
           POSTGRES_USER: "postgres"
           POSTGRES_PASSWORD: "changeme"
           PGDATA: /data/postgres
