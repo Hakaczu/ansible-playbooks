@@ -15,16 +15,16 @@
           - "--entrypoints.web.address=:80"
         state: started
         ports:
-          - "80:80"
-          - "8080:8080"
+          - "[::]:80:80"
+          - "[::]:8080:8080"
         volumes:
           - "/var/run/docker.sock:/var/run/docker.sock:ro"
     
-    - name: nginx 
+    - name: whoami
       ansible.builtin.docker_container:
         name: whoami
         image: "traefik/whoami"
         labels:
           traefik.enable: "true"
-          traefik.http.routers.whoami.rule: "Host(`monitoring.techalchemist.pl`)"
+          traefik.http.routers.whoami.rule: "Host(`hydra-2.techalchemist.pl`)"
           traefik.http.routers.whoami.entrypoints: "web"
