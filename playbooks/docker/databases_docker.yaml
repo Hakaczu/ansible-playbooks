@@ -1,0 +1,9 @@
+- name: run docker databases
+  hosts: hydra-2
+  become: true
+  become_user: root
+  tasks:
+    - name: create postgres volume
+      docker_volume:
+        name: postgres
+        
