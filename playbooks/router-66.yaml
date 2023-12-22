@@ -13,7 +13,7 @@
           - "--providers.docker=true"
           - "--providers.docker.exposedbydefault=false"
           - "--entrypoints.web.address=:80"
-        state: present
+        state: started
         ports:
           - "80:80"
           - "8080:8080"
