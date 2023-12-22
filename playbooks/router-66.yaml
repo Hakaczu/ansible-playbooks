@@ -19,3 +19,12 @@
           - "8080:8080"
         volumes:
           - "/var/run/docker.sock:/var/run/docker.sock:ro"
+    
+    - name: nginx 
+      ansible.builtin.docker_container:
+        name: whoami
+        image: "traefik/whoami"
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.whoami.rule=Host(`monitoring.techalchemist.pl`)"
+          - "traefik.http.routers.whoami.entrypoints=web"
