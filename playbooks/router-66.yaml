@@ -28,3 +28,17 @@
           traefik.enable: "true"
           traefik.http.routers.whoami.rule: "Host(`hydra-2.techalchemist.pl`)"
           traefik.http.routers.whoami.entrypoints: "web"
+    
+    - name: postgres
+      ansible.builtin.docker_container:
+        name: postgres
+        image: postgres
+        envs:
+          POSTGRES_USER: "postgres"
+          POSTGRES_PASSWORD: "changeme"
+          PGDATA: /data/postgres
+        labels:
+          traefik.enable: "true"
+          traefik.tcp.routers.postgres.rule: "Host(`pgsql.techalchemist.pl`)"
+          traefik.tcp.routers.postgres.entrypoints: "tcp"
+          traefik.tcp.services.postgres.loadbalancer.server.port: "5432"
