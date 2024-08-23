@@ -19,7 +19,7 @@
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
           - /var/lib/docker/volumes:/var/lib/docker/volumes
-        state: present
+        state: started
     
     - name: Install Watchtower
       docker_container:
@@ -28,4 +28,4 @@
         restart_policy: always
         volumes:
           - /var/run/docker.sock:/var/run/docker.sock
-        state: present
+        state: started
