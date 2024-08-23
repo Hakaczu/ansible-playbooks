@@ -6,7 +6,7 @@
   tasks:
 
     - name: Get Host Port
-      shell: "echo ${hostname:1}"
+      shell: "hostname | cut -c 2-"
       register: port
 
     - name: Install Portainer agent
