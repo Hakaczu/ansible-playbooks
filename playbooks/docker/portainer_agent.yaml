@@ -1,0 +1,36 @@
+---
+- name: Install Portainer agent
+  hosts: ["hydra-2"]
+  become: true
+
+  tasks:
+    - name: Install Docker
+      apt:
+        name: docker.io
+        state: present
+
+    - name: Get Host Port
+      shell: "${hostname:1}"
+      register: port
+
+    - name: Install Portainer agent
+      docker_container:
+        name: portainer_agent
+        image: portainer/agent
+        restart_policy: always
+        ports:
+          - 
+          - "20{{ port.stdout }}:9001"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - /var/lib/docker/volumes:/var/lib/docker/volumes
+        state: present
+    
+    - name: Install Watchtower
+      docker_container:
+        name: watchtower
+        image: containrrr/watchtower
+        restart_policy: always
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+        state: present
