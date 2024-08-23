@@ -16,7 +16,7 @@
     - name: Install Portainer CE
       docker_container:
         name: portainer
-        image: portainer/portainer-ce:2.20.3
+        image: portainer/portainer-ce:2.21.0-rc2
         restart_policy: always
         ports:
           - "20{{ port.stdout }}:8000"
