@@ -1,0 +1,28 @@
+---
+- name: Install Portainer CE
+  hosts: hydra-3
+  become: true
+
+  tasks:
+    - name: Get Host Port
+      shell: "hostname | cut -c 2-"
+      register: port
+
+    - name: Create Portainer Data Volume
+      docker_volume:
+        name: portainer_data
+        state: present
+
+    - name: Install Portainer CE
+      docker_container:
+        name: portainer
+        image: portainer/portainer-ce:2.20
+        restart_policy: always
+        ports:
+          - "20{{ port.stdout }}:8000"
+          - "30{{ port.stdout }}:9000"
+          - "9443:9443"
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
+          - portainer_data:/data
+        state: started

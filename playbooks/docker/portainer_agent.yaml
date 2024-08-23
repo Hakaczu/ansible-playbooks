@@ -1,5 +1,5 @@
 ---
-- name: Install Portainer agent
+- name: Install Portainer Agent
   hosts: ["hydra-2"]
   become: true
 
